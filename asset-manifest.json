@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/social-demo/static/css/main.743a11c0.css",
+    "main.js": "/social-demo/static/js/main.7a5b735a.js",
+    "static/css/314.6c1b5bea.chunk.css": "/social-demo/static/css/314.6c1b5bea.chunk.css",
+    "static/js/314.b639b5dd.chunk.js": "/social-demo/static/js/314.b639b5dd.chunk.js",
+    "static/css/490.3e28e45d.chunk.css": "/social-demo/static/css/490.3e28e45d.chunk.css",
+    "static/js/490.5568c565.chunk.js": "/social-demo/static/js/490.5568c565.chunk.js",
+    "static/js/453.117b0875.chunk.js": "/social-demo/static/js/453.117b0875.chunk.js",
+    "static/media/logo.png": "/social-demo/static/media/logo.548b9196e17ea49501ed.png",
+    "static/media/profile-image.webp": "/social-demo/static/media/profile-image.02c153b232f9d5c23e76.webp",
+    "static/media/Trail loading green.gif": "/social-demo/static/media/Trail loading green.ad0b2a1955588f28ab45.gif",
+    "static/media/Trail loading purple.gif": "/social-demo/static/media/Trail loading purple.ad96af108e92b20737a0.gif",
+    "static/media/Trail loading blue.gif": "/social-demo/static/media/Trail loading blue.b1b332f9e56ea79d3684.gif",
+    "index.html": "/social-demo/index.html",
+    "static/media/icons8-галочка.svg": "/social-demo/static/media/icons8-галочка.a841534feaee1f2e8e30.svg",
+    "main.743a11c0.css.map": "/social-demo/static/css/main.743a11c0.css.map",
+    "main.7a5b735a.js.map": "/social-demo/static/js/main.7a5b735a.js.map",
+    "314.6c1b5bea.chunk.css.map": "/social-demo/static/css/314.6c1b5bea.chunk.css.map",
+    "314.b639b5dd.chunk.js.map": "/social-demo/static/js/314.b639b5dd.chunk.js.map",
+    "490.3e28e45d.chunk.css.map": "/social-demo/static/css/490.3e28e45d.chunk.css.map",
+    "490.5568c565.chunk.js.map": "/social-demo/static/js/490.5568c565.chunk.js.map",
+    "453.117b0875.chunk.js.map": "/social-demo/static/js/453.117b0875.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.743a11c0.css",
+    "static/js/main.7a5b735a.js"
+  ]
+}
