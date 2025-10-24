@@ -1,0 +1,58 @@
+.posting{
+    padding: 0 20px;
+    padding-bottom: 40px;   
+    display: flex;
+    flex-direction: column;
+
+}
+
+.title{
+    font-size: 36px;
+    &:not(:last-child) {
+        margin-bottom: 25px;
+    }
+}
+
+.post_form{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.post_input{
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 20px;
+    border-radius: 6px;
+    resize: none;
+    min-height: 200px;
+
+}
+
+.button{
+    align-self: flex-end;
+    padding-top: 20px;
+}
+.posts{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 0 20px;
+
+}
+
+.validatedForm{
+    &__formfield{
+    }
+
+    &__label{
+
+    }
+
+    &__input{
+        width: 100%;
+        min-height: 200px;
+        padding: 20px;
+    }
+}
+

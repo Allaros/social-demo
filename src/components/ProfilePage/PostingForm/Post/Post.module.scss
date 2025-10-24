@@ -1,0 +1,41 @@
+.post{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 17fr;
+    column-gap: 30px;
+    &:not(:last-child) {
+        &::after{
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            height: 1px;
+            width: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 1) 50%, transparent 100%);
+        }
+    }
+    &__time{
+        text-align: right;
+        font-size: 18px;
+        color: #aaa;
+        width: 100%;
+        grid-column-start: 2;
+        padding-right: 20px;
+    }
+}
+
+.post_avatar{
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    img{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+    padding-bottom: 100%;
+}

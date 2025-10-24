@@ -1,0 +1,20 @@
+.status{
+    font-style: italic;
+    padding-bottom: 10px;
+    cursor: pointer;
+    &__input{
+        textarea{
+            padding: 20px 10px;
+            width: 100%;
+            margin: 0 -10px;
+            outline: none;
+                font-style: italic;
+                line-height: 1;
+        }
+    }
+    &__string{
+        padding: 20px 10px;
+        margin: 0 -10px;
+    }
+}
+

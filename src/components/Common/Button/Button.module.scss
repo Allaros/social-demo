@@ -1,0 +1,27 @@
+.buttonCont{
+    position: relative;
+}
+.button{
+    padding: 8px 30px;
+    background-color: #2485b6;
+    border-radius: 10px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    &:hover{
+        background-color: #3eb0ea;
+    }
+    &:not(:first-child) {
+        margin-top: 10px;
+    }
+
+    &:active{
+        background-color: #1d5672;
+        transform: scale(0.95);
+    }
+    &:disabled{
+        background-color: #aaa !important;
+        &:hover{
+            background-color: #aaa !important;
+        }
+        cursor: default !important;
+    }
+}

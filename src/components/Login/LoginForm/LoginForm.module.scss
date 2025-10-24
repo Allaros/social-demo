@@ -1,0 +1,96 @@
+.checkbox_element{
+    width: 10px;
+    height: 10px;
+    padding: 8px;
+    background-color: #ffffff55;
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease 0s;
+    z-index: 0;
+
+}
+
+.loginForm{
+        &__form{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    &__checkbox{
+        opacity: 0;
+        position: absolute;
+        &:checked+.checkbox_element{
+            background-color: #c163ff;
+            &::before{
+                content: '';
+                background: url("../../../img/icons8-галочка.svg");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: contain;
+                display: block;
+                position: absolute;
+                z-index: 1;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+            }
+        }
+    }
+
+    &__buttonContainer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__label{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        position: relative;
+    }
+}
+
+
+
+.validatedForm{
+    &__formfield{
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+        position: relative;
+    }
+
+    &__label{
+
+    }
+
+    &__input{
+        padding: 10px 15px;
+    }
+
+    &__showIcon{
+        height: 40%;
+        position: absolute;
+        top: 50%;
+        right: 1%;
+        transform: translate(0, -23%);
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        &:hover{
+            transform: translate(0, -23%) scale(1.02);
+        }
+        &:active{
+            transform: translate(0, -23%) scale(0.95);
+        }
+    }
+
+}
+
+.error{
+    font-size: 16px;
+    color: rgb(255, 110, 14);
+}

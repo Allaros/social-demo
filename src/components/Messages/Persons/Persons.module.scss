@@ -1,0 +1,76 @@
+.people {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 2px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: linear-gradient(180deg, transparent 0%, #dddddd55 50%, transparent 100%);
+    }
+
+    &__list {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    &__item {
+        transition: transform 0.3s ease 0s, color 0.3s ease 0s;
+        color: #ccc;
+
+        &:hover {
+            transform: translate(5px, 0);
+        }
+
+        &.active {
+            transform: translate(20px, 0);
+            color: #fff;
+        }
+    }
+
+    &__window {
+        position: relative;
+        flex: 1 1 auto;
+        margin-bottom: 30px;
+    }
+
+    &__wrapper {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: 2px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: #ffffff00;
+            border-radius: 4px;
+
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, transparent 0%, #fff 30%, #fff 60%, transparent 100%);
+            border-radius: 4px;
+
+        }
+    }
+
+    &__title {
+        font-size: 40px;
+
+        &:not(:last-child) {
+            margin-bottom: 40px;
+        }
+    }
+}

@@ -1,0 +1,70 @@
+.user {
+    display: grid;
+    grid-template-columns: 1fr 6fr 3fr;
+    background-color: #ffffff33;
+    border-radius: 10px;
+    width: 100%;
+    gap: 30px;
+    padding: 15px;
+    padding-right: 30px;
+    align-items: center;
+
+    &__visual {}
+
+    &__picture {
+        position: relative;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        padding-bottom: 100%;
+    }
+
+    &__follow {}
+
+    &__name {
+        font-size: 30px;
+    }
+
+    &__status {
+        font-size: 20px;
+        color: #ddd;
+        word-break: break-all;
+    }
+
+    &__description {
+
+    }
+
+    &__descriptionBlock {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    &__country {}
+
+    &__town {}
+}
+
+.button {
+    justify-self: end;
+    &.follow {
+        button {
+            background-color: #1b263e;
+            &:hover{
+                background-color: #243455;
+            }
+        }
+
+    }
+}

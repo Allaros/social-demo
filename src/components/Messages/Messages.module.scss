@@ -1,0 +1,23 @@
+
+
+.messages {
+    height: 100%;
+    background: linear-gradient(0deg, transparent 0%, rgb(118, 176, 197) 100%);
+    border-radius: 10px;
+    padding: 30px;
+    padding-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 40px;
+
+
+
+    &__wrapper {
+
+
+        height: 90%;
+    }
+}
+
+
+
