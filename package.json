@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://allaros.github.io/social-demo",
+  "homepage": "https://allaros.github.io/social-demo/",
   "dependencies": {
     "@babel/preset-env": "^7.28.3",
     "@lottiefiles/dotlottie-react": "^0.17.1",
