@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting...</title>
+  <script>
+    (function(l) {
+      // Извлекаем путь из URL, начиная с первой подпапки после имени пользователя/организации GitHub.
+      const basePath = l.pathname.split('/').slice(1, 2).join('/');
+      // Если в URL есть путь, начинающийся с /basePath, оставляем его, иначе - оставляем как есть (/).
+      const targetPath = l.pathname.slice(1).split('/').slice(2).join('/') || '/';
+
+      l.replace(
+        l.pathname.slice(1).split('/').slice(1).join('/') || '/'
+      )
+    }(window.location))
+  </script>
+</head>
+<body>
+  Redirecting...
+</body>
+</html>
