@@ -75,7 +75,7 @@ const AppConnected = connect(mapStateToProps, { initApp })(App);
 
 const AppContainer = (props) => {
    return (
-      <BrowserRouter basename="/social-demo">
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
          <Provider store={store}>
             <AppConnected />
          </Provider>
