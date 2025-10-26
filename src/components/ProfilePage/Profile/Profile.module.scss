@@ -1,4 +1,4 @@
-.profile{
+.profile {
     display: grid;
     grid-template-columns: 0.2fr 1fr;
     gap: 40px;
@@ -7,41 +7,169 @@
     padding-bottom: 40px;
 }
 
-.avatar{
+.avatar {
+    &__photo {
+        &:not(:last-child) {
+            margin-bottom: 20px;
+        }
+
+        position: relative;
+        border-radius: 6px;
+        overflow: hidden;
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        padding-bottom: 100%;
+    }
+
+    &__inputContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        font-size: 18px;
+    }
+
+    &__button {
+        position: relative;
+        z-index: 1;
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px 30px;
+        background-color: #2485b6;
+        border-radius: 10px;
+        transition: background-color 0.2s ease, transform 0.1s ease;
+
+        &:hover {
+            background-color: #3eb0ea;
+        }
+
+        &:active {
+            background-color: #1d5672;
+            transform: scale(0.95);
+        }
+
+        &:disabled {
+            background-color: #aaa !important;
+
+            &:hover {
+                background-color: #aaa !important;
+            }
+
+            cursor: default !important;
+        }
+    }
+
+    &__save {
+        position: absolute;
+        top: 0px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: all 0.3s ease 0s;
+        button{
+            width: 100%;
+            height: 100%;
+        }
+        &.choosed{
+            top: 50px;
+        }
+    }
+
+    &__buttonContainer{
+        position: relative;
+    }
+
+    &__input {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+}
+
+
+
+.name {
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    &:not(:last-child) {
+        margin-bottom: 20px;
+    }
+}
+.editImage{
     position: relative;
-    
     img{
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        object-position: center;
+        object-fit: contain;
     }
-    padding-bottom: 100%;
+    padding-bottom: 28px;
+    width: 28px;
+    &::after{
+        content: 'Редактировать профиль';
+        font-size: 16px;
+        text-align: center;
+        display: block;
+        position: absolute;
+        background-color: #000000aa;
+        border-radius: 6px;
+        white-space: nowrap;
+        padding: 2px 4px;
+        top: 55%;
+        right: -30%;
+        transform: translate(100%, -50%);
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.2s ease 0s;
+    }
+    &:hover{
+        &::after{
+            opacity: 1;
+            visibility: visible;
+        }
+    }
 }
 
+.contacts__list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
 
-.name{
-    font-size: 36px;
+.jobSearch{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     &:not(:last-child) {
         margin-bottom: 20px;
     }
 }
 
-.list{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: flex-start;
-}
 
 
-.profile_image{
+.profile_image {
     position: relative;
     margin-bottom: 25px;
-    img{
+
+    img {
         position: absolute;
         top: 0;
         left: 0;
@@ -50,9 +178,8 @@
         object-fit: cover;
         object-position: center;
     }
+
     padding-bottom: 18%;
 }
 
-.user__status{
-    
-}
+.user__status {}

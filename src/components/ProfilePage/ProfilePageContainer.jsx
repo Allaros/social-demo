@@ -1,10 +1,11 @@
 import ProfilePage from './ProfilePage';
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { loadUserProfile, getStatus, updateUserStatus } from '../../redux/ProfileReducer';
+import { loadUserProfile, getStatus, updateUserStatus, updateUserAvatar } from '../../redux/ProfileReducer';
 import WithAuthRedirect from '../../HOC/WithAuthRedirect';
 import { compose } from 'redux';
 import WithUrl from '../../HOC/WithUrl';
+import { getProfile, getProfileId, getProfileLoading, getProfileStatus } from '../../redux/selectors/profile-selectors';
 
 class ProfilePageContainer extends PureComponent {
    componentDidMount() {
@@ -26,15 +27,22 @@ class ProfilePageContainer extends PureComponent {
             status={this.props.status}
             isAuth={this.props.isAuth}
             profile={this.props.profile}
+            profileLoading={this.props.profileLoading}
+            updateUserAvatar={this.props.updateUserAvatar}
          />
       );
    }
 }
 
 let mapStateToProps = (state) => ({
-   profile: state.profilePage.profile,
-   status: state.profilePage.status,
-   id: state.auth.id,
+   profile: getProfile(state),
+   status: getProfileStatus(state),
+   id: getProfileId(state),
+   profileLoading: getProfileLoading(state),
 });
 
-export default compose(WithUrl, connect(mapStateToProps, { loadUserProfile, getStatus, updateUserStatus }), WithAuthRedirect)(ProfilePageContainer);
+export default compose(
+   WithUrl,
+   connect(mapStateToProps, { loadUserProfile, getStatus, updateUserStatus, updateUserAvatar }),
+   WithAuthRedirect
+)(ProfilePageContainer);
