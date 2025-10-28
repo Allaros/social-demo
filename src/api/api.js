@@ -69,6 +69,5 @@ export const updateAvatar = (image) => {
 };
 
 export const updateUserInfo = (data) => {
-   debugger;
    return instanse.put(`profile`, { ...data }).then((response) => response.data);
 };

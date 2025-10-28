@@ -49,7 +49,7 @@ function ProfilePopupContent({ profile, ...props }) {
 
    let onSubmit = (data) => {
       let userInfo = {
-         aboutMe: "aboba",
+         aboutMe: 'aboba',
          contacts: {
             facebook: data.facebook,
             github: data.github,
@@ -88,7 +88,7 @@ function ProfilePopupContent({ profile, ...props }) {
                id={'workFinderDescription'}
                value={profile.lookingForAJobDescription}
             />
-            <p className={classes.popup__contacts}>
+            <div className={classes.popup__contacts}>
                <ValidatedFormField
                   value={profile.contacts.facebook}
                   tag="input"
@@ -119,7 +119,7 @@ function ProfilePopupContent({ profile, ...props }) {
                   isLabel="WhatsApp"
                   id={'whatsApp'}
                />
-            </p>
+            </div>
             <Button class={classes.popup__confirm}>Сохранить</Button>
          </form>
       </div>

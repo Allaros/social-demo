@@ -1,11 +1,17 @@
 import { useState } from 'react';
 
-export default function ValidatedFormField({ tag: Tag = 'input', isLabel = null, ...props }) {
+export default function ValidatedFormField({ tag: Tag = 'input', isLabel = null, value = '', onChange, ...props }) {
    const [fieldFocus, setFieldFocus] = useState(false);
    const [type, setType] = useState(props.type);
 
+   const [fieldValue, setFieldValue] = useState(value);
+
    const registrator = { ...props.register(props.name, props.rules) };
    const error = props.errors?.[props.name];
+
+   let fieldChange = (e) => {
+      setFieldValue(e.target.value);
+   };
 
    return (
       <div className={props.classes.validatedForm__formfield}>
@@ -28,7 +34,8 @@ export default function ValidatedFormField({ tag: Tag = 'input', isLabel = null,
             type={!!type ? type : 'text'}
             id={props.id}
             placeholder={error && !fieldFocus && error.message}
-            value={props.value}
+            value={fieldValue}
+            onChange={fieldChange}
          />
          {props.type === 'password' && (
             <span onClick={() => setType(type === 'text' ? 'password' : 'text')}>

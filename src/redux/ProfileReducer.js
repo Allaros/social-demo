@@ -21,12 +21,10 @@ export const toggleProfileLoading = (isLoading) => ({ type: TOGGLE_PROFILE_LOADI
 export const savePhotoSuccess = (photos) => ({ type: SAVE_PHOTO, photos });
 
 export const updateUserInfoThunk = (info) => {
-   debugger;
-   
    return async (dispatch) => {
       dispatch(toggleProfileLoading(true));
       let response = await updateUserInfo(info);
-      
+
       dispatch(toggleProfileLoading(false));
    };
 };
