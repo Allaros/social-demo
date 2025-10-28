@@ -7,12 +7,16 @@ import ProfilePopup from './ProfilePopup/ProfilePopup';
 import Avatar from '../../../img/Avatar.jpg';
 import editIcon from '../../../img/edit-button-svgrepo-com.svg';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export default function Profile(props) {
    const [imageFile, setImageFile] = useState(null);
    const [popupActiveState, setPopupActiveState] = useState(false);
-   const [popupActiveClass, setPopupActiveClass] = useState('inactive');
+   const [bodyLock, setBodyLock] = useState(false);
+
+   useEffect(() => {
+      document.body.style.overflow = bodyLock ? 'hidden' : 'auto';
+   }, [bodyLock]);
 
    let fileInputRef = useRef(null);
 
@@ -32,10 +36,17 @@ export default function Profile(props) {
       return info || 'Нет информации';
    };
 
-   let activatePopup = () => {
-      setPopupActiveState(true);
+   let togglePopup = (isActive) => {
+      if (isActive) {
+         setPopupActiveState(isActive);
+         setBodyLock(true);
+      } else {
+         setTimeout(() => {
+            setPopupActiveState(isActive);
+         }, 300);
+         setBodyLock(false);
+      }
    };
-
    return (
       <>
          <div className={classes.profile_image}>
@@ -63,8 +74,13 @@ export default function Profile(props) {
             <div className={classes.info}>
                <div className={classes.name}>
                   {props.profile.fullName}{' '}
-                  <button className={classes.editImage}>
-                     <img onClick={activatePopup} src={editIcon} alt="edit icon" />
+                  <button
+                     onClick={() => {
+                        togglePopup(true);
+                     }}
+                     className={classes.editImage}
+                  >
+                     <img src={editIcon} alt="edit icon" />
                   </button>
                </div>
                <Status updateUserStatus={props.updateUserStatus} status={props.status} className={classes.user__status} />
@@ -73,15 +89,18 @@ export default function Profile(props) {
                   <p>{props.profile.lookingForAJobDescription}</p>
                </div>
                <ul className={classes.contacts__list}>
-                  <li className={classes.user_info}>facebook: {isThereInfo(props.profile.contacts.facebook)}</li>
-                  <li className={classes.user_info}>github: {isThereInfo(props.profile.contacts.github)}</li>
-                  <li className={classes.user_info}>instagram: {isThereInfo(props.profile.contacts.instagram)}</li>
-                  <li className={classes.user_info}>email: {isThereInfo(props.profile.contacts.mailLink)}</li>
-                  <li className={classes.user_info}>vk: {isThereInfo(props.profile.contacts.vk)}</li>
+                  <li className={classes.user_info}>Facebook: {isThereInfo(props.profile.contacts.facebook)}</li>
+                  <li className={classes.user_info}>GitHub: {isThereInfo(props.profile.contacts.github)}</li>
+                  <li className={classes.user_info}>Instagram: {isThereInfo(props.profile.contacts.instagram)}</li>
+                  <li className={classes.user_info}>Email: {isThereInfo(props.profile.contacts.mailLink)}</li>
+                  <li className={classes.user_info}>VK: {isThereInfo(props.profile.contacts.vk)}</li>
+                  <li className={classes.user_info}>WhatsApp: {isThereInfo(props.profile.contacts.whatsApp)}</li>
                </ul>
             </div>
          </div>
-         {popupActiveState ? <ProfilePopup /> : null}
+         {popupActiveState ? (
+            <ProfilePopup updateUserInfoThunk={props.updateUserInfoThunk} setBodyLock={setBodyLock} profile={props.profile} togglePopup={togglePopup} />
+         ) : null}
       </>
    );
 }

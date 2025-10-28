@@ -14,12 +14,12 @@ function Header(props) {
       </li>
    ) : (
       <li>
-         <NavLink to="/login">Sign in</NavLink>
+         <NavLink to="/login">Войти</NavLink>
       </li>
    );
    let Logout = !!props.userData.isAuth ? (
       <li>
-         <button onClick={props.logoutUserThunk}>Logout</button>
+         <button onClick={props.logoutUserThunk}>Выйти</button>
       </li>
    ) : null;
    return (

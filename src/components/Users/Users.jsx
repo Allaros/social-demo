@@ -21,7 +21,7 @@ export default function Users(props) {
    return (
       <section className={classes.users}>
          <div className={classes.users__top}>
-            <h2 className={classes.users__title}>Users</h2>
+            <h2 className={classes.users__title}>Пользователи</h2>
          </div>
          <div className={classes.users__searchBlock}>
             <input className={classes.users__search} type="text" name="" id="" />

@@ -16,12 +16,16 @@ export const getUserData = () => {
    return instanse.get(`auth/me`).then((response) => response.data);
 };
 
-export const autorizeUser = ({ email, password, rememberMe }) => {
-   return instanse.post(`auth/login`, { email, password, rememberMe }).then((response) => response.data);
+export const autorizeUser = ({ email, password, rememberMe, captcha }) => {
+   return instanse.post(`auth/login`, { email, password, rememberMe, captcha }).then((response) => response.data);
 };
 
 export const logoutUser = () => {
    return instanse.delete(`auth/login`).then((response) => response.data);
+};
+
+export const getCaptcha = () => {
+   return instanse.get(`security/get-captcha-url`).then((response) => response.data);
 };
 
 //=======================================Users requests======================================================
@@ -62,4 +66,9 @@ export const updateAvatar = (image) => {
          },
       })
       .then((response) => response.data);
+};
+
+export const updateUserInfo = (data) => {
+   debugger;
+   return instanse.put(`profile`, { ...data }).then((response) => response.data);
 };

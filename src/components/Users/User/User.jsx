@@ -23,7 +23,7 @@ export default function User({ id, avatar, name, status, toggleFollow, followed,
             disabled={followingInLoad.some((userId) => userId === id)}
             class={`${classes.button} ${followed ? classes.follow : ''}`}
          >
-            {followed ? 'Unfollow' : 'Follow'}
+            {followed ? 'Отписаться' : 'Подписаться'}
          </Button>
       </li>
    );

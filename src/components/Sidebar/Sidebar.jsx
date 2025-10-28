@@ -9,12 +9,17 @@ export default function Sidebar(props) {
          <ul className={classes.list}>
             <li className={classes.sidebar__link}>
                <NavLink className={({ isActive }) => (isActive ? classes.active : '')} to="/profile">
-                  Profile
+                  Профиль
                </NavLink>
             </li>
             <li className={classes.sidebar__link}>
                <NavLink className={({ isActive }) => (isActive ? classes.active : '')} to="/dialogs">
-                  Messages
+                  Сообщения
+               </NavLink>
+            </li>
+            <li className={classes.sidebar__link}>
+               <NavLink className={({ isActive }) => (isActive ? classes.active : '')} to="/users">
+                  Пользователи
                </NavLink>
             </li>
             {/* <li className={classes.sidebar__link}>
@@ -30,17 +35,11 @@ export default function Sidebar(props) {
          </ul>
          <div className={classes.other}>
             <p>
-               <button>Settings</button>
+               <button>Настройки</button>
             </p>
          </div>
-         <div className={classes.other}>
-            <p>
-               <NavLink className={({ isActive }) => (isActive ? classes.active : '')} to="/users">
-                  Users
-               </NavLink>
-            </p>
-         </div>
-         <Friends friendsData={props.friends}></Friends>
+
+         {props.friends.length !== 0 && <Friends friendsData={props.friends}></Friends>}
       </section>
    );
 }

@@ -1,7 +1,7 @@
 import ProfilePage from './ProfilePage';
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { loadUserProfile, getStatus, updateUserStatus, updateUserAvatar } from '../../redux/ProfileReducer';
+import { loadUserProfile, getStatus, updateUserStatus, updateUserAvatar, updateUserInfoThunk } from '../../redux/ProfileReducer';
 import WithAuthRedirect from '../../HOC/WithAuthRedirect';
 import { compose } from 'redux';
 import WithUrl from '../../HOC/WithUrl';
@@ -29,6 +29,7 @@ class ProfilePageContainer extends PureComponent {
             profile={this.props.profile}
             profileLoading={this.props.profileLoading}
             updateUserAvatar={this.props.updateUserAvatar}
+            updateUserInfoThunk={this.props.updateUserInfoThunk}
          />
       );
    }
@@ -43,6 +44,6 @@ let mapStateToProps = (state) => ({
 
 export default compose(
    WithUrl,
-   connect(mapStateToProps, { loadUserProfile, getStatus, updateUserStatus, updateUserAvatar }),
+   connect(mapStateToProps, { loadUserProfile, getStatus, updateUserStatus, updateUserAvatar, updateUserInfoThunk }),
    WithAuthRedirect
 )(ProfilePageContainer);

@@ -12,6 +12,7 @@ export default function ProfilePage(props) {
    return (
       <div className={classes.content}>
          <Profile
+            updateUserInfoThunk={props.updateUserInfoThunk}
             updateUserAvatar={props.updateUserAvatar}
             urPage={props.urPage}
             updateUserStatus={props.updateUserStatus}
