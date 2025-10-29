@@ -2,12 +2,13 @@ import classes from './Profile.module.scss';
 import ProfileImage from '../../../img/profile-image.webp';
 import Status from './Status/Status';
 import Button from '../../Common/Button/Button';
-import ProfilePopup from './ProfilePopup/ProfilePopup';
 
 import Avatar from '../../../img/Avatar.jpg';
 import editIcon from '../../../img/edit-button-svgrepo-com.svg';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, lazy } from 'react';
+
+const ProfilePopup = lazy(() => import('./ProfilePopup/ProfilePopup.jsx'));
 
 export default function Profile(props) {
    const [imageFile, setImageFile] = useState(null);
@@ -92,9 +93,7 @@ export default function Profile(props) {
                   <li className={classes.user_info}>Facebook: {isThereInfo(props.profile.contacts.facebook)}</li>
                   <li className={classes.user_info}>GitHub: {isThereInfo(props.profile.contacts.github)}</li>
                   <li className={classes.user_info}>Instagram: {isThereInfo(props.profile.contacts.instagram)}</li>
-                  <li className={classes.user_info}>Email: {isThereInfo(props.profile.contacts.mailLink)}</li>
                   <li className={classes.user_info}>VK: {isThereInfo(props.profile.contacts.vk)}</li>
-                  <li className={classes.user_info}>WhatsApp: {isThereInfo(props.profile.contacts.whatsApp)}</li>
                </ul>
             </div>
          </div>

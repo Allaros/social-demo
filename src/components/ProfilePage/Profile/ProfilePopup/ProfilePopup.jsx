@@ -54,7 +54,6 @@ function ProfilePopupContent({ profile, ...props }) {
             facebook: data.facebook,
             github: data.github,
             instagram: data.instagram,
-            mailLink: data.email,
             vk: data.vk,
          },
          lookingForAJob: data.workFinder,
@@ -78,7 +77,7 @@ function ProfilePopupContent({ profile, ...props }) {
                id={'fullname'}
                value={profile.fullName}
             />
-            <Checkbox register={register} label={'Ищу работу'} name={'workFinder'} />
+            <Checkbox checked={profile.lookingForAJob} register={register} label={'Ищу работу'} name={'workFinder'} />
             <ValidatedFormField
                tag="input"
                type="text"
@@ -108,17 +107,7 @@ function ProfilePopupContent({ profile, ...props }) {
                   isLabel="Instagram"
                   id={'instagram'}
                />
-               <ValidatedFormField value={profile.contacts.mailLink} tag="input" type="text" {...fieldMask} name="email" isLabel="Email" id={'email'} />
                <ValidatedFormField value={profile.contacts.vk} tag="input" type="text" {...fieldMask} name="vk" isLabel="VK" id={'vk'} />
-               <ValidatedFormField
-                  value={profile.contacts.whatsApp}
-                  tag="input"
-                  type="text"
-                  {...fieldMask}
-                  name="whatsApp"
-                  isLabel="WhatsApp"
-                  id={'whatsApp'}
-               />
             </div>
             <Button class={classes.popup__confirm}>Сохранить</Button>
          </form>

@@ -1,5 +1,6 @@
 import Avatar from '../img/Avatar.jpg';
 import { loadProfile, getUserStatus, updateStatus, updateAvatar, updateUserInfo } from '../api/api';
+import { setErrorThunk } from './AppReducer';
 
 const ADD_POST = 'ProfileReducer/ADD-POST';
 const SET_USER_PROFILE = 'ProfileReducer/SET_USER_PROFILE';
@@ -23,7 +24,7 @@ export const savePhotoSuccess = (photos) => ({ type: SAVE_PHOTO, photos });
 export const updateUserInfoThunk = (info) => {
    return async (dispatch) => {
       dispatch(toggleProfileLoading(true));
-      let response = await updateUserInfo(info);
+      await updateUserInfo(info);
 
       dispatch(toggleProfileLoading(false));
    };
@@ -53,9 +54,21 @@ export const updateUserStatus = (status) => {
 
 export const updateUserAvatar = (image) => {
    return async (dispatch) => {
-      let response = await updateAvatar(image);
-      if (response.resultCode === 0) {
-         dispatch(savePhotoSuccess(response.data.photos));
+      try {
+         let response = await updateAvatar(image);
+         if (response.resultCode === 0) {
+            dispatch(savePhotoSuccess(response.data.photos));
+         }
+      } catch (error) {
+         debugger;
+         switch (error.code) {
+            case error.code === 'ERR_NETWORK':
+               dispatch(setErrorThunk('Проблемы с сетью, либо размер файла слишком большой'));
+               return;
+            default:
+               dispatch(setErrorThunk('Ошибка при обработке запроса'));
+               return;
+         }
       }
    };
 };
