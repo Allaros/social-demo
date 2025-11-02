@@ -5,7 +5,7 @@ import ValidatedFormField from '../../Common/FormField/ValidateFormField';
 import Checkbox from '../../Common/FormField/Checkbox.jsx';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
-import { autorizeUserThunk } from '../../../redux/AuthReducer';
+import { autorizeUserThunk } from '../../../redux/AuthReducer.ts';
 import { useState, useEffect } from 'react';
 
 function LoginForm({ className, errorMessage, isLoading, autorizeUserThunk, captcha }) {

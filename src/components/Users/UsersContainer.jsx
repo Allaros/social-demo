@@ -2,7 +2,7 @@ import React from 'react';
 import Users from './Users.jsx';
 import { connect } from 'react-redux';
 import Avatar from '../../img/Avatar.jpg';
-import { toggleFollow, changePage, toggleFollowing, getUsersPage, followUserThunk } from '../../redux/UsersReducer.js';
+import { toggleFollow, changePage, toggleFollowing, getUsersPage, followUserThunk } from '../../redux/UsersReducer.ts';
 import { getUsers, getPageSize, getTotalUsersCount, getCurrentPage, getIsFetching, getFollowingInProgress } from '../../redux/selectors/users-selectors.js';
 
 class UsersContainer extends React.Component {

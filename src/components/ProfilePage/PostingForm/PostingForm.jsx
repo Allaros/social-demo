@@ -7,7 +7,7 @@ import ValidatedFormField from '../../Common/FormField/ValidateFormField.jsx';
 import Avatar from '../../../img/Avatar.jpg';
 
 import { connect } from 'react-redux';
-import { addPost } from '../../../redux/ProfileReducer';
+import { addPost } from '../../../redux/ProfileReducer.ts';
 import { useForm } from 'react-hook-form';
 import React from 'react';
 import { compose } from 'redux';

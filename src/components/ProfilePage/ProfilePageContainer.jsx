@@ -1,7 +1,7 @@
 import ProfilePage from './ProfilePage';
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { loadUserProfile, getStatus, updateUserStatus, updateUserAvatar, updateUserInfoThunk } from '../../redux/ProfileReducer';
+import { loadUserProfile, getStatus, updateUserStatus, updateUserAvatar, updateUserInfoThunk } from '../../redux/ProfileReducer.ts';
 import WithAuthRedirect from '../../HOC/WithAuthRedirect';
 import { compose } from 'redux';
 import WithUrl from '../../HOC/WithUrl';

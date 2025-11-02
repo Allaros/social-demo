@@ -5,7 +5,7 @@ import Avatar from '../../img/Avatar.jpg';
 
 import { NavLink } from 'react-router';
 import { connect } from 'react-redux';
-import { getUserDataThunk, logoutUserThunk } from '../../redux/AuthReducer.js';
+import { getUserDataThunk, logoutUserThunk } from '../../redux/AuthReducer.ts';
 
 function Header(props) {
    let LinkName = !!props.userData.isAuth ? (

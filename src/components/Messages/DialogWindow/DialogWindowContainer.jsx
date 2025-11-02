@@ -1,12 +1,10 @@
-import DialogWindow from "./DialogWindow.jsx";
+import DialogWindow from './DialogWindow.jsx';
 
-import {
-   sendNewMessage,
-} from "../../../redux/MessagesReducer.js";
+import { sendNewMessage } from '../../../redux/MessagesReducer.ts';
 
-import { connect } from "react-redux";
-import Avatar from "../../../img/Avatar.jpg";
-import SendImage from "../../../img/ic_send_128_28719.png";
+import { connect } from 'react-redux';
+import Avatar from '../../../img/Avatar.jpg';
+import SendImage from '../../../img/ic_send_128_28719.png';
 
 let mapStateToProps = (state) => {
    return {
@@ -17,8 +15,6 @@ let mapStateToProps = (state) => {
    };
 };
 
-
-
-const DialogWindowContainer = connect(mapStateToProps, {sendNewMessage})(DialogWindow);
+const DialogWindowContainer = connect(mapStateToProps, { sendNewMessage })(DialogWindow);
 
 export default DialogWindowContainer;

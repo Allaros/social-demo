@@ -1,17 +1,53 @@
 import { getUserData, autorizeUser, logoutUser, getCaptcha } from '../api/api';
 
+//Actions
+
 const SET_USER_DATA = 'AuthReducer/SET_USER_DATA';
 const SET_ERROR_MESSAGE = 'AuthReducer/SET_ERROR_MESSAGE';
 const TOGGLE_LOADING = 'AuthReducer/TOGGLE_LOADING';
 const SET_CAPTCHA = 'AuthReducer/SET_CAPTCHA';
 
-export const setUserData = (id, email, login, isAuth) => ({ type: SET_USER_DATA, id, email, login, isAuth });
-export const setErrorMessage = (errorMessage) => ({ type: SET_ERROR_MESSAGE, errorMessage });
-export const toggleLoading = (inLoad) => ({ type: TOGGLE_LOADING, inLoad });
-export const setCaptchaUrl = (captcha) => ({ type: SET_CAPTCHA, captcha });
+type setUserDataType = {
+   type: typeof SET_USER_DATA
+   id: number | null
+   email: string | null
+   login: string | null
+   isAuth: boolean
+}
 
-export const autorizeUserThunk = ({ email, password, rememberMe, captcha }) => {
-   return async (dispatch) => {
+type setErrorMessageType = {
+   type: typeof SET_ERROR_MESSAGE
+   errorMessage: string | null
+}
+
+type toggleLoadingType = {
+   type: typeof TOGGLE_LOADING
+   inLoad: boolean
+}
+
+type setCaptchaUrlType = {
+   type: typeof SET_CAPTCHA
+   captcha: string | null
+}
+
+type AuthActionType = setUserDataType | setErrorMessageType | toggleLoadingType | setCaptchaUrlType
+
+export const setUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean):setUserDataType => ({ type: SET_USER_DATA, id, email, login, isAuth });
+export const setErrorMessage = (errorMessage: string | null): setErrorMessageType => ({ type: SET_ERROR_MESSAGE, errorMessage });
+export const toggleLoading = (inLoad: boolean):toggleLoadingType => ({ type: TOGGLE_LOADING, inLoad });
+export const setCaptchaUrl = (captcha: string | null): setCaptchaUrlType => ({ type: SET_CAPTCHA, captcha });
+
+//Thunks
+
+type payloadType = {
+   email: string | null
+   password: string | null
+   rememberMe: boolean
+   captcha: string | null
+}
+
+export const autorizeUserThunk = ({ email, password, rememberMe, captcha }: payloadType) => {
+   return async (dispatch: any) => {
       dispatch(toggleLoading(true));
       let response = await autorizeUser({ email, password, rememberMe, captcha });
       if (response.resultCode === 0) {
@@ -29,14 +65,14 @@ export const autorizeUserThunk = ({ email, password, rememberMe, captcha }) => {
 };
 
 export const getCaptchaURL = () => {
-   return async (dispatch) => {
+   return async (dispatch: any) => {
       let response = await getCaptcha();
       dispatch(setCaptchaUrl(response.url));
    };
 };
 
 export const logoutUserThunk = () => {
-   return async (dispatch) => {
+   return async (dispatch: any) => {
       let response = await logoutUser();
       if (response.resultCode === 0) {
          dispatch(setUserData(null, null, null, false));
@@ -44,7 +80,7 @@ export const logoutUserThunk = () => {
    };
 };
 
-export const getUserDataThunk = () => async (dispatch) => {
+export const getUserDataThunk = () => async (dispatch: any) => {
    let response = await getUserData();
    if (response.resultCode === 0) {
       dispatch(setUserData(response.data.id, response.data.email, response.data.login, true));
@@ -52,7 +88,19 @@ export const getUserDataThunk = () => async (dispatch) => {
    dispatch(toggleLoading(false));
 };
 
-const initialState = {
+//Reducer
+
+type initialStateType = {
+   id: null | number
+   email: null | string
+   login: null | string
+   isAuth: boolean
+   errorMessage: null | string
+   captcha: null | string
+   isLoading: boolean
+};
+
+const initialState: initialStateType = {
    id: null,
    email: null,
    login: null,
@@ -62,7 +110,7 @@ const initialState = {
    isLoading: false,
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: AuthActionType): initialStateType => {
    switch (action.type) {
       case SET_USER_DATA:
          return { ...state, id: action.id, email: action.email, login: action.login, isAuth: action.isAuth };

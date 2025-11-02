@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import { Provider, connect } from 'react-redux';
 import store from './redux/reduxStore';
 
-import { initApp, setErrorThunk } from './redux/AppReducer.js';
+import { initApp, setErrorThunk } from './redux/AppReducer.ts';
 import Preloader from './components/Common/Preloader/Preloader.jsx';
 
 // import News from './components/News/News.jsx';
