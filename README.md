@@ -1,3 +1,9 @@
+# Увидеть сайт можно по ссылке https://allaros.github.io/social-demo/
+
+# Данные тестового аккаунта
+# Email: free@samuraijs.com
+# Password: free
+
 # Getting Started with Social-demo
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
