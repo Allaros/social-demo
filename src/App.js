@@ -9,14 +9,14 @@ import Preloader from './components/Common/Preloader/Preloader.tsx';
 // import News from './components/News/News.jsx';
 // import Music from './components/Music/Music.jsx';
 import SidebarContainer from './components/Sidebar/SidebarContainer.jsx';
-import Header from './components/Header/Header.jsx';
+import Header from './components/Header/Header.tsx';
 import Login from './components/Login/Login.jsx';
 import ProfilePage from './components/ProfilePage/ProfilePage.tsx';
 import SignUp from './components/SignUp/SignUp.jsx';
 import Error from './components/Common/Error/Error.jsx';
 
 const Users = lazy(() => import('./components/Users/Users.tsx'));
-const Messages = lazy(() => import('./components/Messages/Messages.jsx'));
+const Messages = lazy(() => import('./components/Messages/Messages.tsx'));
 
 class App extends React.Component {
    catchAllUnhandledErrors = (promiseRejectionEvent) => {

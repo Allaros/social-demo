@@ -94,5 +94,9 @@ export const sendMessage = async (userId: number, body: string) => {
    return response.data;
 };
 
+export const checkNewMessages = async () => {
+   const response = await instanse.get(`dialogs/messages/new/count`);
+   return response.data
+}
 
 

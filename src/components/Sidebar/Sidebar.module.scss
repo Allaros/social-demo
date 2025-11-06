@@ -7,20 +7,8 @@
     display: flex;
     flex-direction: column;
     max-height: 100vh;
-}
 
-.list {
-    display: flex;
-    align-items: flex-start;
-    gap: 30px;
-    flex-direction: column;
-
-    &:not(:last-child) {
-        margin-bottom: 60px;
-    }
-}
-
-.sidebar__link {
+    &__link {
     position: relative;
     a {
         display: block;
@@ -41,10 +29,47 @@
         }
 
     }
+    &__messagesCount{
+        position: relative;
+    }
 }
+}
+
+.list {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    flex-direction: column;
+
+    &:not(:last-child) {
+        margin-bottom: 60px;
+    }
+}
+
+
 
 .other{
     &:not(:last-child) {
         margin-bottom: 60px;
+    }
+}
+
+.count{
+    visibility: hidden;
+    position: absolute;
+    top: 50%;
+    right: -40px;
+    transform: translate(0, -50%);
+    font-size: 16px;
+    background-color: #00000033;
+    padding: 10px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.active{
+        visibility: visible;
     }
 }

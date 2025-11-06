@@ -4,22 +4,31 @@ import classes from './Header.module.scss';
 import Avatar from '../../img/Avatar.jpg';
 
 import { NavLink } from 'react-router';
-import { connect } from 'react-redux';
-import { getUserDataThunk, logoutUserThunk } from '../../redux/AuthReducer.ts';
+import { logoutUserThunk } from '../../redux/AuthReducer.ts';
 
-function Header(props) {
-   let LinkName = !!props.userData.isAuth ? (
+import { useAppDispatch, useAppSelector } from '../../redux/typedHooks/hooks.ts';
+
+const Header: React.FC = () => {
+   const dispatch = useAppDispatch();
+   const userData = useAppSelector(state => state.auth)
+
+   let handleOnClick = () => {
+      
+      dispatch(logoutUserThunk())
+   }
+
+   let LinkName = !!userData.isAuth ? (
       <li>
-         <NavLink to="/profile">{props.userData.login}</NavLink>
+         <NavLink to="/profile">{userData.login}</NavLink>
       </li>
    ) : (
       <li>
          <NavLink to="/login">Войти</NavLink>
       </li>
    );
-   let Logout = !!props.userData.isAuth ? (
+   let Logout = !!userData.isAuth ? (
       <li>
-         <button onClick={props.logoutUserThunk}>Выйти</button>
+         <button onClick={handleOnClick}>Выйти</button>
       </li>
    ) : null;
    return (
@@ -30,22 +39,16 @@ function Header(props) {
             </div>
             <nav className={classes.navbar}>
                <ul className={classes.list}>
-                  {props.isLoading ? '' : Logout}
-                  {props.isLoading ? '' : LinkName}
+                  {userData.isLoading ? '' : Logout}
+                  {userData.isLoading ? '' : LinkName}
                </ul>
             </nav>
             <div className={classes.lk}>
-               <img src={Avatar} alt="" />
+               <img src={userData.yourPicture || Avatar} alt="" />
             </div>
          </div>
       </header>
    );
 }
 
-let mapStateToProps = (state) => {
-   return {
-      userData: state.auth,
-   };
-};
-
-export default connect(mapStateToProps, { getUserDataThunk, logoutUserThunk })(Header);
+export default Header

@@ -1,6 +1,5 @@
 .person{
-
-
+    width: 90%;
     &__avatar{
         position: relative;
         overflow: hidden;
@@ -18,7 +17,7 @@
 
     &__link{
         display: grid;
-        grid-template-columns: 1fr 2.5fr;
+        grid-template-columns: 1fr 5fr;
         align-items: center;
         gap: 15px;
         color: #ffffffaa;
@@ -27,7 +26,7 @@
         }
         &:hover{
             p{
-                transform: translate(5%, 0);
+                transform: translate(3%, 0);
             }
         }
         &.active{

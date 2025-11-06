@@ -1,4 +1,4 @@
-import Message from './Message/Message.jsx';
+import Message from './Message/Message.tsx';
 import { useForm } from 'react-hook-form';
 import classes from './DialogWindow.module.scss';
 import sendImage from '../../../img/ic_send_128_28719.png';
@@ -8,21 +8,47 @@ import { sendNewMessage } from '../../../redux/MessagesReducer.ts';
 
 import { useAppDispatch, useAppSelector } from '../../../redux/typedHooks/hooks.ts';
 
-export default function DialogWindow({ currentDialog }) {
+type Props = {
+   currentDialog?: number 
+}
+
+ const DialogWindow: React.FC<Props> = ({ currentDialog }) => {
    const dispatch = useAppDispatch();
    const messageMassive = useAppSelector((state) => state.messagesPage.messageMassive);
    const userId = useAppSelector((state) => state.auth.id);
+   const yourPicture = useAppSelector((state) => state.auth.yourPicture);
+
+   const dialogs = useAppSelector((state) => state.messagesPage.dialogs);
+   let opponentPicture = Avatar as string | null;
+   if(currentDialog !== undefined){
+      const currentOpponent = dialogs.find((dialog) => dialog.id === Number(currentDialog));
+      opponentPicture = currentOpponent ? currentOpponent.avatar : null;
+   }
+   
    const { register, handleSubmit, resetField } = useForm();
 
    const dialogComponents = messageMassive.map((message) => (
-      <Message key={message.id} avatar={Avatar} addonClass={message.senderId === userId ? 'user' : ''} time={message.addedAt} name={message.senderName}>
+      <Message
+         key={message.id}
+         avatar={message.senderId === userId ? yourPicture || Avatar : opponentPicture || Avatar}
+         addonClass={message.senderId === userId ? 'user' : ''}
+         time={message.addedAt}
+         name={message.senderName}
+         viewed={message.viewed}
+      >
          {message.body}
       </Message>
    ));
 
+
    function onSubmit(data) {
-      dispatch(sendNewMessage(currentDialog, data.message));
+      if(currentDialog !== undefined){
+         dispatch(sendNewMessage(currentDialog, data.message));
+      }
       resetField('message');
+   }
+   if(!currentDialog){
+      return <div className={classes.dialogVoid}>Выберите диалог</div>
    }
    return (
       <div className={classes.dialog}>
@@ -40,3 +66,5 @@ export default function DialogWindow({ currentDialog }) {
       </div>
    );
 }
+
+export default DialogWindow

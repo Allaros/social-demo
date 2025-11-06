@@ -64,6 +64,7 @@ export const autorizeUserThunk = ({ email, password, rememberMe, captcha }: payl
    return async (dispatch: any) => {
       dispatch(toggleLoading(true));
       let response = await autorizeUser({ email, password, rememberMe, captcha });
+      debugger
       if (response.resultCode === 0) {
          dispatch(getUserDataThunk());
          dispatch(setCaptchaUrl(null));
@@ -99,6 +100,7 @@ export const getUserDataThunk = () => async (dispatch: any) => {
    if (response.resultCode === 0) {
       dispatch(setUserData(response.data.id, response.data.email, response.data.login, true));
       dispatch(loadUserPicture(response.data.id));
+      
    }
    dispatch(toggleLoading(false));
 };

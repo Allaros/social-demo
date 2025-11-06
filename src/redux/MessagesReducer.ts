@@ -1,4 +1,4 @@
-import { getAllDialogs, getListOfMessages, sendMessage, setDialog } from "../api/api.ts";
+import { checkNewMessages, getAllDialogs, getListOfMessages, sendMessage, setDialog } from "../api/api.ts";
 import { Photos } from "./ProfileReducer.ts";
 
 //Actions
@@ -7,12 +7,13 @@ const SET_DIALOGS = 'MessagesReducer/SET_DIALOGS' as const;
 
 const LOAD_MESSAGES = 'MessagesReducer/LOAD_MESSAGES' as const;
 
+const SET_NEW_MESSGES_COUNT = 'MessagesReducer/SET_NEW_MESSGES_COUNT' as const;
+
+
 
 type setDialogsType = {
    type: typeof SET_DIALOGS
-   id: number, 
-   name: string
-   avatar: string | null
+   dialogs: Array<Person>
 }
 
 type loadMessagesType = {
@@ -20,13 +21,19 @@ type loadMessagesType = {
    messagesList: Array<MessageType>
 }
 
+type setNewMessagesCountType = {
+   type: typeof SET_NEW_MESSGES_COUNT
+   messagesCount: number
+}
 
-export const setDialogs = (id: number, name: string, avatar: string | null): setDialogsType => ({type: SET_DIALOGS, id, name, avatar})
+export const setDialogs = (dialogs: Array<Person>): setDialogsType => ({type: SET_DIALOGS, dialogs})
 
 export const loadMessages = (messagesList: Array<MessageType>): loadMessagesType => ({type: LOAD_MESSAGES, messagesList})
 
+export const setNewMessagesCount = (messagesCount: number): setNewMessagesCountType => ({type: SET_NEW_MESSGES_COUNT, messagesCount})
 
-type MessagesActionType =  setDialogsType | loadMessagesType;
+
+type MessagesActionType =  setDialogsType | loadMessagesType | setNewMessagesCountType;
 
 
 //Thunks
@@ -34,10 +41,16 @@ export const getDialogs = () => {
    
    return async (dispatch) => {
       const response = await getAllDialogs();
+      let dialogs: Array<Person> = []
       response.forEach((person: DialogType) => {
-         dispatch(setDialogs(person.id, person.userName, person.photos.small))
+         let dialog = {
+            id: person.id,
+            name: person.userName,
+            avatar: person.photos.small
+         }
+         dialogs.push(dialog)
       })
-      debugger
+      dispatch(setDialogs(dialogs))
    }
 }
 
@@ -57,7 +70,7 @@ type MessageType = {
    translatedBody?: any
    viewed: boolean
 }
-export const chooseDialog = (userId: number) => {
+export const loadDialog = (userId: number) => {
    return async (dispatch) => {
       const response: listOfMessagesResponse = await getListOfMessages(userId, 1, 10);
       let messagesList: Array<MessageType> = []
@@ -77,6 +90,15 @@ export const chooseDialog = (userId: number) => {
 export const sendNewMessage = (userId: number, messageBody: string) => {
    return async (dispatch) => {
       await sendMessage(userId, messageBody);
+      dispatch(loadDialog(userId));
+   }
+}
+
+export const getNewMessages = () => {
+   return async (dispatch) => {
+      let response = await checkNewMessages();
+      dispatch(setNewMessagesCount(response))
+      
    }
 }
 
@@ -110,6 +132,7 @@ const initialState = {
    ] as Array<MessageType>,
    dialogs: [
    ] as Array<Person>,
+   newMessagesCount: 0 as number
 };
 
 type initialStateType = typeof initialState
@@ -118,16 +141,15 @@ const messagesReducer = (state = initialState, action: MessagesActionType):initi
    switch (action.type) {
       case LOAD_MESSAGES:
          return {
-            ...state, messageMassive: [...state.messageMassive, ...action.messagesList]}
+            ...state, messageMassive: [...action.messagesList]}
       case SET_DIALOGS:
-         let dialog: Person = {
-               id: action.id,
-               name: action.name,
-               avatar: action.avatar
-            }
          return {
             ...state,
-            dialogs: [...state.dialogs, dialog]
+            dialogs: [...action.dialogs]
+         }
+      case SET_NEW_MESSGES_COUNT:
+         return{
+            ...state, newMessagesCount: action.messagesCount
          }
       default:
          return state;
