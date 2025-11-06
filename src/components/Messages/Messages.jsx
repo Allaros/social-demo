@@ -1,18 +1,36 @@
-import DialogWindowContainer from "./DialogWindow/DialogWindowContainer.jsx";
-import classes from "./Messages.module.scss";
+import DialogWindow from './DialogWindow/DialogWindow.jsx';
+import classes from './Messages.module.scss';
 
-import PersonsContainer from "./Persons/PersonsContainer.jsx";
-import WithAuthRedirect from "../../HOC/WithAuthRedirect.jsx";
+import WithAuthRedirect from '../../HOC/WithAuthRedirect.jsx';
 
-function Messages(props) {
+import { useAppDispatch } from '../../redux/typedHooks/hooks.ts';
+import { chooseDialog, getDialogs } from '../../redux/MessagesReducer.ts';
+
+import { useEffect } from 'react';
+import Persons from './Persons/Persons.jsx';
+import { useParams } from 'react-router';
+
+function Messages() {
+   const dispatch = useAppDispatch();
+
+   const params = useParams();
+
+   useEffect(() => {
+      dispatch(getDialogs());
+   }, [dispatch]);
+
+   useEffect(() => {
+      if (params.userId) {
+         dispatch(chooseDialog(Number(params.userId)));
+      }
+   }, [dispatch, params]);
+
    return (
       <section className={classes.messages}>
-         <PersonsContainer />
-         <DialogWindowContainer />
+         <Persons />
+         <DialogWindow currentDialog={Number(params.userId)} />
       </section>
    );
 }
-
-
 
 export default WithAuthRedirect(Messages);

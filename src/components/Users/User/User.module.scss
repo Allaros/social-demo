@@ -50,10 +50,15 @@
         align-items: flex-start;
         gap: 20px;
     }
+    &__buttons{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 16px;
+        justify-content: end;
+    }
 
-    &__country {}
 
-    &__town {}
 }
 
 .button {

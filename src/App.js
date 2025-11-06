@@ -4,18 +4,18 @@ import { Provider, connect } from 'react-redux';
 import store from './redux/reduxStore';
 
 import { initApp, setErrorThunk } from './redux/AppReducer.ts';
-import Preloader from './components/Common/Preloader/Preloader.jsx';
+import Preloader from './components/Common/Preloader/Preloader.tsx';
 
 // import News from './components/News/News.jsx';
 // import Music from './components/Music/Music.jsx';
 import SidebarContainer from './components/Sidebar/SidebarContainer.jsx';
 import Header from './components/Header/Header.jsx';
 import Login from './components/Login/Login.jsx';
-import ProfilePageContainer from './components/ProfilePage/ProfilePageContainer.jsx';
+import ProfilePage from './components/ProfilePage/ProfilePage.tsx';
 import SignUp from './components/SignUp/SignUp.jsx';
 import Error from './components/Common/Error/Error.jsx';
 
-const UsersComponent = lazy(() => import('./components/Users/UsersContainer.jsx'));
+const Users = lazy(() => import('./components/Users/Users.tsx'));
 const Messages = lazy(() => import('./components/Messages/Messages.jsx'));
 
 class App extends React.Component {
@@ -44,7 +44,7 @@ class App extends React.Component {
                      {!!this.props.initialized ? (
                         <Routes>
                            <Route
-                              path="/dialogs/*"
+                              path="/dialogs/:userId?"
                               element={
                                  <Suspense fallback={<Preloader color="blue" />}>
                                     <Messages />
@@ -57,14 +57,14 @@ class App extends React.Component {
                               path="/users"
                               element={
                                  <Suspense fallback={<Preloader color="blue" />}>
-                                    <UsersComponent />
+                                    <Users />
                                  </Suspense>
                               }
                            />
-                           <Route path="/profile/:userId?" element={<ProfilePageContainer />} />
+                           <Route path="/profile/:userId?" element={<ProfilePage />} />
                            <Route path="/login" element={<Login />} />
                            <Route path="/sign-up" element={<SignUp />} />
-                           <Route path="/" element={<ProfilePageContainer />} />
+                           <Route path="/" element={<ProfilePage />} />
                            <Route path="*" element={<div>404 Not Found</div>} />
                         </Routes>
                      ) : (

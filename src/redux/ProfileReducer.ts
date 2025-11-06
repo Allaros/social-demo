@@ -1,5 +1,5 @@
 import Avatar from '../img/Avatar.jpg';
-import { loadProfile, getUserStatus, updateStatus, updateAvatar, updateUserInfo } from '../api/api.js';
+import { loadProfile, getUserStatus, updateStatus, updateAvatar, updateUserInfo } from '../api/api.ts';
 import { setErrorThunk } from './AppReducer.ts';
 
 //Actions
@@ -83,7 +83,7 @@ export const savePhotoSuccess = (photos: Photos):savePhotoSuccessType => ({ type
 
 //Thunks
 
-type UserInfoType ={
+export type UserInfoType ={
    aboutMe: string | null | undefined
    contacts: Contacts
    lookingForAJob: boolean

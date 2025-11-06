@@ -1,4 +1,4 @@
-import { getUsers, followUserRequest, unfollowUserRequest } from '../api/api';
+import { getUsers, followUserRequest, unfollowUserRequest } from '../api/api.ts';
 
 import { Photos } from './ProfileReducer';
 

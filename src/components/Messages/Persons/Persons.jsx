@@ -1,8 +1,14 @@
 import classes from './Persons.module.scss';
 import Person from './Person/Person';
 
-export default function Persons(props) {
-   const personComponents = props.personInfo.map((person) => <Person key={person.id} className={classes.people__item} name={person.name} id={person.id} />);
+import { useAppSelector } from '../../../redux/typedHooks/hooks';
+
+export default function Persons({ currentDialog }) {
+   const dialogs = useAppSelector((state) => state.messagesPage.dialogs);
+
+   const personComponents = dialogs.map((person) => (
+      <Person currentDialog={currentDialog} key={person.id} name={person.name} id={person.id} avatar={person.avatar} />
+   ));
    return (
       <div className={classes.people}>
          <div className={classes.people__title}>Диалоги</div>

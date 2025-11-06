@@ -2,7 +2,12 @@ import PreloaderGreen from "../../../img/Trail loading green.gif";
 import PreloaderBlue from "../../../img/Trail loading blue.gif";
 import PreloaderPurple from "../../../img/Trail loading purple.gif";
 
-export default function Preloader(props) {
+type Props = {
+   className?: string
+   color?: string
+}
+
+const Preloader: React.FC<Props> = ({className, color}) => {
    function chooseColor(color) {
       if (color === "green") {
          return <img src={PreloaderGreen} alt="loading gif" />;
@@ -16,5 +21,7 @@ export default function Preloader(props) {
       }
    }
 
-   return <div className={props.className}>{chooseColor(props.color)}</div>;
+   return <div className={className}>{chooseColor(color)}</div>;
 }
+
+export default Preloader;

@@ -1,18 +1,15 @@
-import classes from "./Message.module.scss";
+import classes from './Message.module.scss';
 
-export default function Message(props) {
-
+export default function Message({ avatar, addonClass, time, name, children }) {
    return (
-      <div className={`${classes.message} ${classes[props.addonClass]}`}>
+      <div className={`${classes.message} ${classes[addonClass]}`}>
          <div className={classes.message__image}>
-            <img src={props.Avatar} alt="author-pic" />
+            <img src={avatar} alt="author-pic" />
          </div>
          <div className={classes.message__text}>
-            <p className={classes.message__author}>{props.addonClass === "user" ? "Me" : "Andrew"}</p>
-            <p className={classes.message__content}>
-               {props.children}
-            </p>
-            <p className={classes.message__time}>{props.time}</p>
+            <p className={classes.message__author}>{name}</p>
+            <p className={classes.message__content}>{children}</p>
+            <p className={classes.message__time}>{time}</p>
          </div>
       </div>
    );

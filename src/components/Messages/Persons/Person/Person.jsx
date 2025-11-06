@@ -1,9 +1,17 @@
 import { NavLink } from 'react-router';
+import Avatar from '../../../../img/Avatar.jpg';
 
-export default function Person({ id, name, className }) {
+import classes from './Person.module.scss';
+
+export default function Person({ id, name, avatar, currentDialog }) {
    return (
-      <li className={className}>
-         <NavLink to={`/dialogs/${id}_${name}`}>{name}</NavLink>
+      <li className={classes.person}>
+         <NavLink className={({ isActive }) => (isActive ? `${classes.person__link} ${classes.active}` : classes.person__link)} to={`/dialogs/${id}`}>
+            <div className={classes.person__avatar}>
+               <img src={avatar || Avatar} alt="" />
+            </div>
+            <p>{name}</p>
+         </NavLink>
       </li>
    );
 }

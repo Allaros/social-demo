@@ -71,3 +71,28 @@ export const updateAvatar = (image) => {
 export const updateUserInfo = (data) => {
    return instanse.put(`profile`, { ...data }).then((response) => response.data);
 };
+
+//===================================Messages===============================================
+
+export const setDialog = async (userId: number) => {
+   const response = await instanse.put(`dialogs/${userId}`);
+   return response.data;
+};
+
+export const getAllDialogs = async () => {
+   const response = await instanse.get(`dialogs`);
+   return response.data;
+};
+
+export const getListOfMessages = async (userId: number, page: number, count: number) => {
+   const response = await instanse.get(`dialogs/${userId}/messages?page=${page}&count=${count}`);
+   return response.data;
+};
+
+export const sendMessage = async (userId: number, body: string) => {
+   const response = await instanse.post(`dialogs/${userId}/messages`, {body});
+   return response.data;
+};
+
+
+

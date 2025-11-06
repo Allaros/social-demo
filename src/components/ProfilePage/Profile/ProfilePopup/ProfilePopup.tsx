@@ -4,11 +4,22 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import ValidatedFormField from '../../../Common/FormField/ValidateFormField';
-import Button from '../../../Common/Button/Button';
+import Button from '../../../Common/Button/Button.tsx';
 import Checkbox from '../../../Common/FormField/Checkbox';
 
-export default function ProfilePopup({ togglePopup, profile, ...props }) {
+import { useAppDispatch, useAppSelector } from '../../../../redux/typedHooks/hooks.ts';
+import { updateUserInfoThunk, UserInfoType } from '../../../../redux/ProfileReducer.ts';
+
+type Props = {
+   togglePopup: (toggle: boolean) => void
+}
+
+const ProfilePopup: React.FC<Props> = ({ togglePopup }) => {
+   
+   
    const [popupActiveClass, setPopupActiveClass] = useState(false);
+
+   
 
    useEffect(() => {
       setPopupActiveClass(true);
@@ -26,14 +37,16 @@ export default function ProfilePopup({ togglePopup, profile, ...props }) {
                      className={classes.popup__close}
                   ></button>
                </div>
-               <ProfilePopupContent updateUserInfoThunk={props.updateUserInfoThunk} profile={profile} className={classes.popup__content} />
+               <ProfilePopupContent className={classes.popup__content} />
             </div>
          </div>
       </div>
    );
 }
 
-function ProfilePopupContent({ profile, ...props }) {
+function ProfilePopupContent({ className }) {
+   const dispatch = useAppDispatch();
+   const profile = useAppSelector(state => state.profilePage.profile)
    const {
       register,
       handleSubmit,
@@ -47,24 +60,31 @@ function ProfilePopupContent({ profile, ...props }) {
       errors,
    };
 
-   let onSubmit = (data) => {
-      let userInfo = {
+   let onSubmit = (data: any) => {
+      let userInfo: UserInfoType = {
          aboutMe: 'aboba',
          contacts: {
             facebook: data.facebook,
             github: data.github,
             instagram: data.instagram,
             vk: data.vk,
+            youtube: null,
+            mainLink: null,
+            twitter: null,
+            website: null
          },
          lookingForAJob: data.workFinder,
          lookingForAJobDescription: data.workFinderDescription,
          fullName: data.fullname,
       };
-      props.updateUserInfoThunk(userInfo);
+      dispatch(updateUserInfoThunk(userInfo));
       reset();
    };
+   if(!profile){
+      return <div>Загрузка профиля...</div>
+   }
    return (
-      <div className={props.className}>
+      <div className={className}>
          <h2 className={classes.popup__title}>Редактирование профиля</h2>
          <form className={classes.popup__form} onSubmit={handleSubmit(onSubmit)}>
             <ValidatedFormField
@@ -77,7 +97,7 @@ function ProfilePopupContent({ profile, ...props }) {
                id={'fullname'}
                value={profile.fullName}
             />
-            <Checkbox checked={profile.lookingForAJob} register={register} label={'Ищу работу'} name={'workFinder'} />
+            <Checkbox checked={profile?.lookingForAJob} register={register} label={'Ищу работу'} name={'workFinder'} />
             <ValidatedFormField
                tag="input"
                type="text"
@@ -89,7 +109,7 @@ function ProfilePopupContent({ profile, ...props }) {
             />
             <div className={classes.popup__contacts}>
                <ValidatedFormField
-                  value={profile.contacts.facebook}
+                  value={profile.contacts?.facebook}
                   tag="input"
                   type="text"
                   {...fieldMask}
@@ -97,9 +117,9 @@ function ProfilePopupContent({ profile, ...props }) {
                   isLabel="Facebook"
                   id={'facebook'}
                />
-               <ValidatedFormField value={profile.contacts.github} tag="input" type="text" {...fieldMask} name="github" isLabel="GitHub" id={'github'} />
+               <ValidatedFormField value={profile.contacts?.github} tag="input" type="text" {...fieldMask} name="github" isLabel="GitHub" id={'github'} />
                <ValidatedFormField
-                  value={profile.contacts.instagram}
+                  value={profile.contacts?.instagram}
                   tag="input"
                   type="text"
                   {...fieldMask}
@@ -107,10 +127,12 @@ function ProfilePopupContent({ profile, ...props }) {
                   isLabel="Instagram"
                   id={'instagram'}
                />
-               <ValidatedFormField value={profile.contacts.vk} tag="input" type="text" {...fieldMask} name="vk" isLabel="VK" id={'vk'} />
+               <ValidatedFormField value={profile.contacts?.vk} tag="input" type="text" {...fieldMask} name="vk" isLabel="VK" id={'vk'} />
             </div>
-            <Button class={classes.popup__confirm}>Сохранить</Button>
+            <Button disabled={false} className={classes.popup__confirm}>Сохранить</Button>
          </form>
       </div>
    );
 }
+
+export default ProfilePopup;
