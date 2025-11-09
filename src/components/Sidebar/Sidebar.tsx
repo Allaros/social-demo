@@ -1,4 +1,4 @@
-import Friends from './Friends/Friends.jsx';
+import Friends from './Friends/Friends.tsx';
 
 import { NavLink } from 'react-router';
 import classes from './Sidebar.module.scss';
@@ -7,20 +7,24 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/typedHooks/hooks.ts';
 import { getNewMessages } from '../../redux/MessagesReducer.ts';
 
-export default function Sidebar(props) {
+const Sidebar: React.FC = () => {
+
    const dispatch = useAppDispatch();
    const count = useAppSelector((state) => state.messagesPage.newMessagesCount);
+   const isAuth = useAppSelector((state) => state.auth.isAuth);
    useEffect(() => {
-      dispatch(getNewMessages());
-
-      const intervalId = setInterval(() => {
+      if (isAuth) {
          dispatch(getNewMessages());
-      }, 10000);
 
-      return () => {
-         clearInterval(intervalId); // Очищаем интервал, чтобы избежать утечек памяти и лишних запросов
-      };
-   }, [dispatch, count]);
+         const intervalId = setInterval(() => {
+            dispatch(getNewMessages());
+         }, 10000);
+
+         return () => {
+            clearInterval(intervalId);
+         };
+      }
+   }, [dispatch, count, isAuth]);
 
    return (
       <section className={classes.sidebar}>
@@ -48,7 +52,9 @@ export default function Sidebar(props) {
             </p>
          </div>
 
-         {props.friends.length !== 0 && <Friends friendsData={props.friends}></Friends>}
+         <Friends></Friends>
       </section>
    );
 }
+
+export default Sidebar;

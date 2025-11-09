@@ -1,9 +1,16 @@
 import classes from './Friends.module.scss';
 
-import Friend from './Friend/Friend.jsx';
+import Friend from './Friend/Friend.tsx';
+import { useAppSelector } from '../../../redux/typedHooks/hooks.ts';
 
-export default function Friends(props) {
-   const friendComponents = props.friendsData.map((friend) => <Friend {...friend} key={friend.id} />);
+export default function Friends() {
+   const friends = useAppSelector(state => state.sidebarComponent.friends);
+
+   if(friends.length === 0){
+      return
+   } 
+
+   const friendComponents = friends.map((friend) => <Friend {...friend} key={friend.id} />);
 
    return (
       <section className={classes.friends}>

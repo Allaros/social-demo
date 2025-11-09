@@ -1,4 +1,6 @@
+import { ThunkAction } from 'redux-thunk';
 import { getUserDataThunk } from './AuthReducer.ts';
+import { RootState } from './reduxStore.ts';
 
 //Actions
 
@@ -23,12 +25,23 @@ export const setError = (message: string| null):SetErrorType => ({ type: SET_ERR
 
 //Thunks
 
-export const setErrorThunk = (message) => {
+type ThunkType = ThunkAction<void, RootState, unknown, AppActionType>
+
+export const setErrorThunk = (message: string): ThunkType => {
    return (dispatch) => {
       dispatch(setError(message));
       setTimeout(() => {
          dispatch(setError(null));
       }, 5000);
+   };
+};
+
+export const initApp = (): ThunkType => {
+   return (dispatch) => {
+      let userDataLoaded = dispatch(getUserDataThunk());
+      Promise.all([userDataLoaded]).then((response) => {
+         dispatch(setInitializingSuccess());
+      });
    };
 };
 
@@ -44,14 +57,9 @@ const initialState: initialStateType = {
    someError: null,
 };
 
-export const initApp = () => {
-   return (dispatch: any) => {
-      let userDataLoaded = dispatch(getUserDataThunk());
-      Promise.all([userDataLoaded]).then((response) => {
-         dispatch(setInitializingSuccess());
-      });
-   };
-};
+
+
+
 
 
 const appReducer = (state = initialState, action: AppActionType ): initialStateType => {

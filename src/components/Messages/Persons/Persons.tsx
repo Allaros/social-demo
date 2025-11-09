@@ -1,13 +1,15 @@
 import classes from './Persons.module.scss';
-import Person from './Person/Person';
+import Person from './Person/Person.tsx';
 
 import { useAppSelector } from '../../../redux/typedHooks/hooks';
 
-export default function Persons({ currentDialog }) {
+
+
+ const Persons: React.FC = () => {
    const dialogs = useAppSelector((state) => state.messagesPage.dialogs);
 
    const personComponents = dialogs.map((person) => (
-      <Person currentDialog={currentDialog} key={person.id} name={person.name} id={person.id} avatar={person.avatar} />
+      <Person key={person.id} name={person.name} id={person.id} avatar={person.avatar} />
    ));
    return (
       <div className={classes.people}>
@@ -20,3 +22,6 @@ export default function Persons({ currentDialog }) {
       </div>
    );
 }
+
+
+export default Persons

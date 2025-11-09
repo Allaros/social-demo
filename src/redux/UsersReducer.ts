@@ -1,6 +1,8 @@
+import { ThunkAction } from 'redux-thunk';
 import { getUsers, followUserRequest, unfollowUserRequest } from '../api/api.ts';
 
 import { Photos } from './ProfileReducer';
+import { RootState } from './reduxStore.ts';
 
 //Actions
 
@@ -59,8 +61,10 @@ export const toggleFollowing = (id:number, fetching: boolean):toggleFollowingTyp
 
 //Thunks
 
-export const getUsersPage = (currentPage: number, pageSize: number) => {
-   return async (dispatch: any) => {
+type ThunkType = ThunkAction<Promise<void>, RootState, unknown, UsersActionType>
+
+export const getUsersPage = (currentPage: number, pageSize: number): ThunkType => {
+   return async (dispatch) => {
       dispatch(toggleIsFetching(true));
 
       let response = await getUsers(currentPage, pageSize);
@@ -72,8 +76,8 @@ export const getUsersPage = (currentPage: number, pageSize: number) => {
    };
 };
 
-export const followUserThunk = (id: number, followed: boolean) => {
-   return async (dispatch: any) => {
+export const followUserThunk = (id: number, followed: boolean): ThunkType => {
+   return async (dispatch) => {
       dispatch(toggleFollowing(id, true));
       if (followed) {
          let response = await unfollowUserRequest(id);

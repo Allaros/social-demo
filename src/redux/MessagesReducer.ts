@@ -1,5 +1,7 @@
+import { ThunkAction } from "redux-thunk";
 import { checkNewMessages, getAllDialogs, getListOfMessages, sendMessage, setDialog } from "../api/api.ts";
 import { Photos } from "./ProfileReducer.ts";
+import { RootState } from "./reduxStore.ts";
 
 //Actions
 
@@ -37,7 +39,10 @@ type MessagesActionType =  setDialogsType | loadMessagesType | setNewMessagesCou
 
 
 //Thunks
-export const getDialogs = () => {
+
+type ThunkType = ThunkAction<Promise<void>, RootState, unknown, MessagesActionType>;
+
+export const getDialogs = (): ThunkType => {
    
    return async (dispatch) => {
       const response = await getAllDialogs();
@@ -67,10 +72,10 @@ type MessageType = {
    recipientId: number
    senderId: number
    senderName: string
-   translatedBody?: any
+   translatedBody?: unknown
    viewed: boolean
 }
-export const loadDialog = (userId: number) => {
+export const loadDialog = (userId: number): ThunkType => {
    return async (dispatch) => {
       const response: listOfMessagesResponse = await getListOfMessages(userId, 1, 10);
       let messagesList: Array<MessageType> = []
@@ -87,14 +92,14 @@ export const loadDialog = (userId: number) => {
    }
 }
 
-export const sendNewMessage = (userId: number, messageBody: string) => {
+export const sendNewMessage = (userId: number, messageBody: string): ThunkType => {
    return async (dispatch) => {
       await sendMessage(userId, messageBody);
       dispatch(loadDialog(userId));
    }
 }
 
-export const getNewMessages = () => {
+export const getNewMessages = (): ThunkType => {
    return async (dispatch) => {
       let response = await checkNewMessages();
       dispatch(setNewMessagesCount(response))
@@ -113,7 +118,7 @@ type DialogType = {
 }
 
 
-export const startDialog = (userId: number) => {
+export const startDialog = (userId: number): ThunkType => {
    return async (dispatch) => {
       await setDialog(userId);
    }

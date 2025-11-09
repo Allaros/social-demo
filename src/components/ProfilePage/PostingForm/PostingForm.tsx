@@ -2,15 +2,19 @@ import classes from './PostingForm.module.scss';
 
 import Post from './Post/Post.tsx';
 import Button from '../../Common/Button/Button.tsx';
-import ValidatedFormField from '../../Common/FormField/ValidateFormField.jsx';
+import ValidatedFormField from '../../Common/FormField/ValidateFormField.tsx';
 
 import Avatar from '../../../img/Avatar.jpg';
 
-import { FieldValues, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import React from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../redux/typedHooks/hooks.ts';
 import { addPost } from '../../../redux/ProfileReducer.ts';
+
+type PostingFormDataType = {
+   post_text: string
+}
 
 const PostingForm: React.FC = () => {
    const dispatch = useAppDispatch();
@@ -23,7 +27,7 @@ const PostingForm: React.FC = () => {
       handleSubmit,
       resetField,
       formState: { errors },
-   } = useForm({
+   } = useForm<PostingFormDataType>({
       mode: 'onBlur',
       reValidateMode: 'onBlur',
    });
@@ -34,7 +38,7 @@ const PostingForm: React.FC = () => {
       errors,
    };
 
-   let onSubmit = (data: FieldValues) => {
+   let onSubmit = (data: PostingFormDataType) => {
       dispatch(addPost(data.post_text));
       resetField('post_text');
    };

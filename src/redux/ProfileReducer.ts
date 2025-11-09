@@ -1,6 +1,8 @@
 import Avatar from '../img/Avatar.jpg';
 import { loadProfile, getUserStatus, updateStatus, updateAvatar, updateUserInfo } from '../api/api.ts';
 import { setErrorThunk } from './AppReducer.ts';
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from './reduxStore.ts';
 
 //Actions
 
@@ -20,7 +22,7 @@ type Contacts = {
    youtube: string | null
    github: string | null
    mainLink: string | null
-} | null | undefined
+} 
 
 export type Photos = {
    large: string | null
@@ -91,8 +93,10 @@ export type UserInfoType ={
    fullName: string
 }
 
-export const updateUserInfoThunk = (info: UserInfoType) => {
-   return async (dispatch: any) => {
+type ThunkType = ThunkAction<Promise<void>, RootState, unknown, ProfileActionType>
+
+export const updateUserInfoThunk = (info: UserInfoType):ThunkType => {
+   return async (dispatch) => {
       dispatch(toggleProfileLoading(true));
       await updateUserInfo(info);
 
@@ -100,30 +104,30 @@ export const updateUserInfoThunk = (info: UserInfoType) => {
    };
 };
 
-export const loadUserProfile = (id: number | null) => {
-   return async (dispatch: any) => {
+export const loadUserProfile = (id: number | null): ThunkType => {
+   return async (dispatch)  => {
       dispatch(toggleProfileLoading(true));
       let response = await loadProfile(id);
       dispatch(toggleProfileLoading(false));
       dispatch(setUserProfile(response));
    };
 };
-export const getStatus = (id: number | null) => {
-   return async (dispatch: any) => {
+export const getStatus = (id: number | null): ThunkType => {
+   return async (dispatch) => {
       let response = await getUserStatus(id);
       dispatch(updateStatusActionCreator(response));
    };
 };
 
-export const updateUserStatus = (status: string) => {
-   return async (dispatch: any) => {
+export const updateUserStatus = (status: string): ThunkType => {
+   return async (dispatch) => {
       await updateStatus(status);
       dispatch(updateStatusActionCreator(status));
    };
 };
 
-export const updateUserAvatar = (image: any) => {
-   return async (dispatch: any) => {
+export const updateUserAvatar = (image: File): ThunkType => {
+   return async (dispatch) => {
       try {
          let response = await updateAvatar(image);
          if (response.resultCode === 0) {

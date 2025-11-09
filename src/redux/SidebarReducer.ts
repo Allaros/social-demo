@@ -1,11 +1,11 @@
-type Friend = {
+export type FriendType = {
    avatar: string
    id: number
    name: string
 }
 
 type initialStateType = {
-   friends: Array<Friend>
+   friends: Array<FriendType>
 }
 
 const initialState: initialStateType = {

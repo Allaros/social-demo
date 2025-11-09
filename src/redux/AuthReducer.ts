@@ -1,4 +1,8 @@
+
+import { ThunkAction } from 'redux-thunk';
 import { getUserData, autorizeUser, logoutUser, getCaptcha, loadProfile } from '../api/api.ts';
+import { RootState } from './reduxStore.ts';
+
 
 //Actions
 
@@ -42,7 +46,7 @@ export const setUserData = (id: number | null, email: string | null, login: stri
 export const setErrorMessage = (errorMessage: string | null): setErrorMessageType => ({ type: SET_ERROR_MESSAGE, errorMessage });
 export const toggleLoading = (inLoad: boolean):toggleLoadingType => ({ type: TOGGLE_LOADING, inLoad });
 export const setCaptchaUrl = (captcha: string | null): setCaptchaUrlType => ({ type: SET_CAPTCHA, captcha });
-export const setYourPicture = (picture: string | null) => ({type: SET_YOUR_PICTURE, picture});
+export const setYourPicture = (picture: string | null): setYourPictureType => ({type: SET_YOUR_PICTURE, picture});
 
 //Thunks
 
@@ -50,21 +54,22 @@ type payloadType = {
    email: string | null
    password: string | null
    rememberMe: boolean
-   captcha: string | null
+   captcha?: string
 }
 
-export const loadUserPicture = (id: number) => {
+type ThunkType = ThunkAction<Promise<void>, RootState, unknown, AuthActionType>
+
+export const loadUserPicture = (id: number): ThunkType  => {
    return async (dispatch) => {
       let response = await loadProfile(id)
       dispatch(setYourPicture(response.photos.large));
    }
 }
 
-export const autorizeUserThunk = ({ email, password, rememberMe, captcha }: payloadType) => {
-   return async (dispatch: any) => {
+export const autorizeUserThunk = ({ email, password, rememberMe, captcha }: payloadType): ThunkType => {
+   return async (dispatch) => {
       dispatch(toggleLoading(true));
       let response = await autorizeUser({ email, password, rememberMe, captcha });
-      debugger
       if (response.resultCode === 0) {
          dispatch(getUserDataThunk());
          dispatch(setCaptchaUrl(null));
@@ -79,15 +84,15 @@ export const autorizeUserThunk = ({ email, password, rememberMe, captcha }: payl
    };
 };
 
-export const getCaptchaURL = () => {
-   return async (dispatch: any) => {
+export const getCaptchaURL = (): ThunkType => {
+   return async (dispatch) => {
       let response = await getCaptcha();
       dispatch(setCaptchaUrl(response.url));
    };
 };
 
-export const logoutUserThunk = () => {
-   return async (dispatch: any) => {
+export const logoutUserThunk = (): ThunkType => {
+   return async (dispatch) => {
       let response = await logoutUser();
       if (response.resultCode === 0) {
          dispatch(setUserData(null, null, null, false));
@@ -95,7 +100,7 @@ export const logoutUserThunk = () => {
    };
 };
 
-export const getUserDataThunk = () => async (dispatch: any) => {
+export const getUserDataThunk = (): ThunkType => async (dispatch) => {
    let response = await getUserData();
    if (response.resultCode === 0) {
       dispatch(setUserData(response.data.id, response.data.email, response.data.login, true));

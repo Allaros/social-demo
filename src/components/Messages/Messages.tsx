@@ -6,7 +6,7 @@ import { useAppDispatch } from '../../redux/typedHooks/hooks.ts';
 import { loadDialog, getDialogs } from '../../redux/MessagesReducer.ts';
 
 import { lazy, useEffect } from 'react';
-import Persons from './Persons/Persons.jsx';
+import Persons from './Persons/Persons.tsx';
 import { useParams } from 'react-router';
 
 const DialogWindow = lazy(() => import('./DialogWindow/DialogWindow.tsx'));
@@ -28,7 +28,7 @@ const Messages: React.FC = () => {
    }, [dispatch, params]);
    return (
       <section className={classes.messages}>
-         <Persons />
+         <Persons/>
          <DialogWindow currentDialog={Number(params.userId)} />
       </section>
    );

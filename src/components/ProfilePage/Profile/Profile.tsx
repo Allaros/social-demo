@@ -7,7 +7,7 @@ import Avatar from '../../../img/Avatar.jpg';
 import editIcon from '../../../img/edit-button-svgrepo-com.svg';
 import Preloader from "../../Common/Preloader/Preloader.tsx"
 
-import { useState, useRef, useEffect, lazy } from 'react';
+import { useState, useRef, useEffect, lazy, ChangeEvent } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../redux/typedHooks/hooks.ts';
 
 
@@ -23,7 +23,7 @@ const Profile: React.FC<Props> = ({urPage}) => {
 
    const profile = useAppSelector(state => state.profilePage.profile);
 
-   const [imageFile, setImageFile] = useState(null);
+   const [imageFile, setImageFile] = useState(null as null | File);
    const [popupActiveState, setPopupActiveState] = useState(false);
    const [bodyLock, setBodyLock] = useState(false);
 
@@ -33,8 +33,8 @@ const Profile: React.FC<Props> = ({urPage}) => {
 
    let fileInputRef = useRef<HTMLInputElement>(null);
 
-   let onInputFileChange = (e: any) => {
-      if (e.target.files.length > 0) {
+   let onInputFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files && e.target.files.length > 0) {
          setImageFile(e.target.files[0]);
       }
    };

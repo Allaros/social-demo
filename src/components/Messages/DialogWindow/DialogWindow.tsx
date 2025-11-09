@@ -12,6 +12,10 @@ type Props = {
    currentDialog?: number 
 }
 
+type FormDataType = {
+   message: string
+}
+
  const DialogWindow: React.FC<Props> = ({ currentDialog }) => {
    const dispatch = useAppDispatch();
    const messageMassive = useAppSelector((state) => state.messagesPage.messageMassive);
@@ -25,7 +29,7 @@ type Props = {
       opponentPicture = currentOpponent ? currentOpponent.avatar : null;
    }
    
-   const { register, handleSubmit, resetField } = useForm();
+   const { register, handleSubmit, resetField } = useForm<FormDataType>();
 
    const dialogComponents = messageMassive.map((message) => (
       <Message
@@ -41,7 +45,7 @@ type Props = {
    ));
 
 
-   function onSubmit(data) {
+   function onSubmit(data: FormDataType) {
       if(currentDialog !== undefined){
          dispatch(sendNewMessage(currentDialog, data.message));
       }

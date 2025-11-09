@@ -6,14 +6,11 @@ import store from './redux/reduxStore';
 import { initApp, setErrorThunk } from './redux/AppReducer.ts';
 import Preloader from './components/Common/Preloader/Preloader.tsx';
 
-// import News from './components/News/News.jsx';
-// import Music from './components/Music/Music.jsx';
-import SidebarContainer from './components/Sidebar/SidebarContainer.jsx';
+import Sidebar from './components/Sidebar/Sidebar.tsx';
 import Header from './components/Header/Header.tsx';
-import Login from './components/Login/Login.jsx';
+import Login from './components/Login/Login.tsx';
 import ProfilePage from './components/ProfilePage/ProfilePage.tsx';
-import SignUp from './components/SignUp/SignUp.jsx';
-import Error from './components/Common/Error/Error.jsx';
+import Error from './components/Common/Error/Error.tsx';
 
 const Users = lazy(() => import('./components/Users/Users.tsx'));
 const Messages = lazy(() => import('./components/Messages/Messages.tsx'));
@@ -39,7 +36,7 @@ class App extends React.Component {
             <Header />
             <main className="main">
                <div className="main__container">
-                  <SidebarContainer></SidebarContainer>
+                  <Sidebar></Sidebar>
                   <section className="dynamic-wrapper">
                      {!!this.props.initialized ? (
                         <Routes>
@@ -51,8 +48,6 @@ class App extends React.Component {
                                  </Suspense>
                               }
                            />
-                           {/* <Route path="/news" element={<News />} />
-                           <Route path="/music" element={<Music />} /> */}
                            <Route
                               path="/users"
                               element={
@@ -63,7 +58,6 @@ class App extends React.Component {
                            />
                            <Route path="/profile/:userId?" element={<ProfilePage />} />
                            <Route path="/login" element={<Login />} />
-                           <Route path="/sign-up" element={<SignUp />} />
                            <Route path="/" element={<ProfilePage />} />
                            <Route path="*" element={<div>404 Not Found</div>} />
                         </Routes>

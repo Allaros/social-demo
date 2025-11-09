@@ -1,5 +1,5 @@
 import classes from './Login.module.scss';
-import LoginForm from './LoginForm/LoginForm';
+import LoginForm from './LoginForm/LoginForm.tsx';
 import WithLoginRedirect from '../../HOC/WithLoginRedirect';
 
 function Login() {

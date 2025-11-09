@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import classes from './Status.module.scss';
 
 import { useAppDispatch, useAppSelector } from '../../../../redux/typedHooks/hooks';
@@ -31,7 +31,7 @@ const Status: React.FC<Props> = ({className}) => {
       }
    };
 
-   let onStatusChange = (e: any) => {
+   let onStatusChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
       setStatus(e.currentTarget.value);
    };
    return (

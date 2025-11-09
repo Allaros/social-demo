@@ -1,25 +1,38 @@
 import classes from './LoginForm.module.scss';
 
-import Button from '../../Common/Button/Button';
-import ValidatedFormField from '../../Common/FormField/ValidateFormField';
-import Checkbox from '../../Common/FormField/Checkbox.jsx';
+import Button from '../../Common/Button/Button.tsx';
+import ValidatedFormField from '../../Common/FormField/ValidateFormField.tsx';
+import Checkbox from '../../Common/FormField/Checkbox.tsx';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
 import { autorizeUserThunk } from '../../../redux/AuthReducer.ts';
-import { useState, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../redux/typedHooks/hooks.ts';
 
-function LoginForm({ className, errorMessage, isLoading, autorizeUserThunk, captcha }) {
-   const [isCaptcha, setIsCaptcha] = useState(!!captcha);
-   useEffect(() => {
-      setIsCaptcha(!!captcha);
-   }, [captcha]);
+type Props = {
+   className?: string
+}
+
+type FormDataType = {
+   email: string
+   password: string
+   rememberMe: boolean
+   captcha?: string
+
+}
+
+const LoginForm: React.FC<Props> = ({ className }) => {
+
+   const dispatch = useAppDispatch();
+
+   const errorMessage = useAppSelector(state => state.auth.errorMessage);
+   const isLoading = useAppSelector(state => state.auth.isLoading);
+   const captcha = useAppSelector(state => state.auth.captcha);
 
    const {
       register,
       handleSubmit,
       reset,
       formState: { errors },
-   } = useForm({ mode: 'onBlur' });
+   } = useForm<FormDataType>({ mode: 'onBlur' });
 
    const fieldMask = {
       register,
@@ -27,14 +40,14 @@ function LoginForm({ className, errorMessage, isLoading, autorizeUserThunk, capt
       errors,
    };
 
-   const onSubmit = (data) => {
-      autorizeUserThunk({ ...data });
+   const onSubmit = (data: FormDataType) => {
+      dispatch(autorizeUserThunk({ ...data }));
       reset();
    };
    return (
       <>
          <form onSubmit={handleSubmit(onSubmit)} className={`${className} ${classes.loginForm__form}`}>
-            <ValidatedFormField
+            <ValidatedFormField<FormDataType>
                tag="input"
                type="email"
                {...fieldMask}
@@ -43,7 +56,7 @@ function LoginForm({ className, errorMessage, isLoading, autorizeUserThunk, capt
                rules={{ required: 'Это обязательное поле' }}
                id={'email'}
             />
-            <ValidatedFormField
+            <ValidatedFormField<FormDataType>
                tag="input"
                {...fieldMask}
                name="password"
@@ -52,14 +65,14 @@ function LoginForm({ className, errorMessage, isLoading, autorizeUserThunk, capt
                rules={{ required: 'Это обязательное поле' }}
                id={'password'}
             />
-            <Checkbox register={register} name={'remember me'} label={'Запомнить меня'} />
+            <Checkbox<FormDataType> register={register} name={'rememberMe'} label={'Запомнить меня'} />
             {!!errorMessage && <div className={classes.error}>*{errorMessage}</div>}
-            {isCaptcha && (
+            {!!captcha && (
                <div className={classes.captcha}>
                   <div className={classes.captcha__img}>
                      <img src={captcha} alt="captcha" />
                   </div>
-                  <ValidatedFormField tag="input" type="text" {...fieldMask} name="captcha" rules={{ required: 'Это обязательное поле' }} id={'captcha'} />
+                  <ValidatedFormField<FormDataType> tag="input" type="text" {...fieldMask} name="captcha" rules={{ required: 'Это обязательное поле' }} id={'captcha'} />
                </div>
             )}
             <div className={`${classes.loginForm__formfield} ${classes.loginForm__buttonContainer}`}>
@@ -72,10 +85,4 @@ function LoginForm({ className, errorMessage, isLoading, autorizeUserThunk, capt
    );
 }
 
-let mapStateToProps = (state) => ({
-   errorMessage: state.auth.errorMessage,
-   isLoading: state.auth.isLoading,
-   captcha: state.auth.captcha,
-});
-
-export default connect(mapStateToProps, { autorizeUserThunk })(LoginForm);
+export default LoginForm;
